@@ -1,0 +1,9 @@
+.weui-cell{
+    height:50px;
+}
+#loginButton{
+    margin-top:20px;
+}
+.checkCodeDiv{
+    display: none;
+}

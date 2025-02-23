@@ -1,0 +1,142 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.MessageMapper">
+    <sql id="BASE_COLUMN">
+         keyId,fromUser,toUser,type,content,isRead,isDelete,addTime,modifyTime,groupId
+    </sql>
+
+    <insert id="insertMessage" parameterType="com.jixiata.model.Bo.Message">
+      INSERT INTO tb_message Values(#{keyId},#{fromUser},#{toUser},#{type},
+      #{content},#{isRead},#{isDelete},#{addTime},#{modifyTime},#{groupId})
+    </insert>
+
+    <select id="getMessageByCondition" resultType="com.jixiata.model.Bo.Message">
+      SELECT <include refid="BASE_COLUMN"/>
+      FROM tb_message
+      WHERE isDelete = 0
+      <if test="condition.keyId != null">
+        AND  KeyId= #{condition.keyId}
+    </if>
+      <if test="condition.fromUser != null">
+        AND  fromUser= #{condition.fromUser}
+    </if>
+      <if test="condition.toUser != null">
+        AND toUser = #{condition.toUser}
+    </if>
+      <if test="condition.type != null">
+        AND type = #{condition.type}
+    </if>
+      <if test="condition.isRead != null">
+        AND  isRead= #{condition.isRead}
+    </if>
+    <if test="condition.startAddTime != null and condition.startAddTime != ''">
+        AND addTime > ${condition.startAddTime}
+    </if>
+        <if test="condition.endAddTime != null and condition.endAddTime != ''">
+            AND addTime <![CDATA[ < ]]> ${condition.endAddTime}
+        </if>
+     <if test="pageIndex != null and pageSize != null">
+         LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
+     </if>
+    </select>
+
+    <update id="updateMessageByKeyId" parameterType="com.jixiata.model.Bo.Message">
+        UPDATE tb_Message
+        <set>
+            <if test="fromUser != null">
+                fromUser = #{fromUser},
+            </if>
+            <if test="toUser != null">
+                toUser = #{toUser},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="isRead != null">
+                isRead = #{isRead},
+            </if>
+            <if test="isDelete != null">
+                isDelete = #{isDelete},
+            </if>
+            <if test="addTime != null">
+                AddTime = #{addTime},
+            </if>
+            <if test="modifyTime != null">
+                ModifyTime = #{modifyTime},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="groupId != null">
+                groupId = #{groupId},
+            </if>
+        </set>
+        WHERE KeyId = #{keyId}
+    </update>
+
+    <select id="getCountByCondition" parameterType="com.jixiata.model.Bo.Message" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM tb_Message
+        WHERE isDelete = 0
+        <if test="keyId != null">
+            AND  KeyId= #{keyId}
+        </if>
+        <if test="fromUser != null">
+            AND  fromUser= #{fromUser}
+        </if>
+        <if test="toUser != null">
+            AND toUser = #{toUser}
+        </if>
+        <if test="type != null">
+            AND type = #{type}
+        </if>
+        <if test="isRead != null">
+            AND  isRead= #{isRead}
+        </if>
+        <if test="startAddTime != null and startAddTime != ''">
+            AND addTime > ${startAddTime}
+        </if>
+        <if test="endAddTime != null and endAddTime != ''">
+            AND addTime <![CDATA[ < ]]> ${endAddTime}
+        </if>
+    </select>
+
+    <select id="getMineExistMessageUser" parameterType="java.lang.String" resultType="java.lang.String">
+        select distinct fromUser from tb_message where isDelete = 0 and toUser = #{userId} and type = 1 and isRead = 0
+    </select>
+
+    <select id="getLastTimeAndNoMarkNumber" resultType="com.jixiata.model.Vo.NoMarkNumAndTimeVo">
+      select count(1) as NoMarkNumber, max(addTime) as LastTime
+      from tb_message where isdelete = 0 and toUser = #{mineUserId} and fromUser = #{oppoUserId} and isRead = 0 and type = 1
+    </select>
+    <select id="getLastTimeAndNoMarkNumberOfGroup" resultType="com.jixiata.model.Vo.NoMarkNumAndTimeVo">
+       select count(1) as NoMarkNumber, max(addTime) as LastTime
+      from tb_message where isdelete = 0 and toUser = #{mineUserId} and isRead = 0 and groupId = #{groupId}
+    </select>
+
+    <select id="queryNoMarkMessage" resultType="com.jixiata.model.Bo.Message" parameterType="com.jixiata.model.Vo.QueryNoMarkMessageVo">
+        select <include refid="BASE_COLUMN"/>
+        from tb_message
+        where isDelete = 0
+        <if test="queryType == 1">
+            AND toUser = #{mineUserId} AND fromUser = #{oppoUserId} AND isRead = 0 AND type = 1
+        </if>
+        <if test="queryType == 2 || queryType == 3">
+            AND  toUser = #{mineUserId} AND isRead = 0 And GroupId = #{groupId}
+        </if>
+        ORDER BY ADDTIME ASC
+    </select>
+    <update id="updateNoMarkingMessages" parameterType="com.jixiata.model.Vo.QueryNoMarkMessageVo">
+        update tb_message
+        set isRead = 1
+        where isDelete = 0
+        <if test="queryType == 1">
+            AND toUser = #{mineUserId} AND fromUser = #{oppoUserId} AND type = 1
+        </if>
+        <if test="queryType == 2">
+            AND  toUser = #{mineUserId} AND type = 2
+        </if>
+    </update>
+</mapper>

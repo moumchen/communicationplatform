@@ -1,0 +1,19 @@
+#password{
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+.password2_label{
+    margin-top: 15px;
+    margin-bottom:10px;
+}
+#password2{
+    margin-top:15px;
+    margin-bottom:10px;
+}
+#registerButton{
+    margin-top:10px;
+}
+
+.checkCodeDiv{
+    display: none;
+}

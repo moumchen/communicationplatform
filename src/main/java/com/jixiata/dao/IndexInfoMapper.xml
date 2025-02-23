@@ -1,0 +1,82 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.IndexInfoMapper">
+    <sql id="BASE_COLUMN">
+      KeyId,Kind,Title,Content,Img,IsDelete,AddTime,ModifyTime,Rank
+    </sql>
+
+    <insert id="insertIndexInfo" parameterType="com.jixiata.model.Bo.IndexInfo">
+      INSERT INTO tb_index_info Values(#{keyId},#{kind},#{title},#{content},#{img},#{isDelete},#{addTime},#{modifyTime},#{rank})
+    </insert>
+
+    <select id="getIndexInfoByCondition" resultType="com.jixiata.model.Bo.IndexInfo">
+      SELECT <include refid="BASE_COLUMN"/>
+      FROM tb_index_info
+      WHERE isDelete = 0
+      <if test="condition.keyId != null">
+        AND  KeyId= #{condition.keyId}
+    </if>
+      <if test="condition.kind != null">
+        AND  kind= #{condition.kind}
+    </if>
+      <if test="condition.title != null">
+        AND title = #{condition.title}
+    </if>
+
+     Order By Rank DESC
+        <if test="pageIndex != null and pageSize != null">
+            LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
+        </if>
+    </select>
+
+    <update id="updateIndexInfoByKeyId" parameterType="com.jixiata.model.Bo.IndexInfo">
+        UPDATE tb_index_info
+        <set>
+            <if test="keyId != null">
+                keyId = #{keyId},
+            </if>
+            <if test="kind != null">
+                kind = #{kind},
+            </if>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="isDelete != null">
+                isDelete = #{isDelete},
+            </if>
+            <if test="addTime != null">
+                AddTime = #{addTime},
+            </if>
+            <if test="modifyTime != null">
+                ModifyTime = #{modifyTime},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+            <if test="rank != null">
+                rank = #{rank},
+            </if>
+        </set>
+        WHERE KeyId = #{keyId}
+    </update>
+
+    <select id="getCountByCondition" parameterType="com.jixiata.model.Bo.IndexInfo" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM tb_index_info
+        WHERE isDelete = 0
+        <if test="keyId != null">
+            AND  KeyId= #{keyId}
+        </if>
+        <if test="kind != null">
+            AND  kind= #{kind}
+        </if>
+        <if test="title != null">
+            AND title = #{title}
+        </if>
+    </select>
+</mapper>

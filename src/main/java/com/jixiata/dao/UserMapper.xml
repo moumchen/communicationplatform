@@ -1,0 +1,87 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.UserMapper">
+
+    <sql id="BASE_COLUMN">
+        KeyId,AuthId,ClassId,Nickname,name,phone,email,identity,Addtime,ModifyTime,IsDelete,HeadImg
+    </sql>
+
+    <insert id="insertUser" parameterType="com.jixiata.model.Bo.User">
+        INSERT INTO tb_user (KeyID, authId, classid, AddTime, ModifyTime,isdelete,nickname,name,phone,email,identity,headImg)
+        VALUES(#{keyId},#{authId},#{classId},#{addTime},#{modifyTime},#{isDelete},#{nickname},#{name},#{phone},#{email},#{identity},#{headImg})
+    </insert>
+
+    <select id="getUserInfoByAuthId" parameterType="java.lang.String" resultType="com.jixiata.model.Bo.User">
+      SELECT <include refid="BASE_COLUMN"/>
+      FROM tb_user
+      WHERE isDelete = 0
+      And AuthId = #{authId}
+    </select>
+
+    <update id="updateUserInfoByKeyId" parameterType="com.jixiata.model.Bo.User">
+        UPDATE tb_user
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="classId != null">
+                classId = #{classId},
+            </if>
+            <if test="authId != null">
+                AuthId = #{authId},
+            </if>
+            <if test="name != null">
+                Name = #{name},
+            </if>
+            <if test="headImg != null">
+                HeadImg = #{headImg},
+            </if>
+            <if test="phone != null">
+                Phone = #{phone},
+            </if>
+            <if test="email != null">
+                Email = #{email},
+            </if>
+            <if test="identity != null">
+                Identity = #{identity},
+            </if>
+            <if test="addTime != null">
+                AddTime = #{addTime},
+            </if>
+            <if test="modifyTime != null">
+                ModifyTime = #{modifyTime},
+            </if>
+            <if test="isDelete != null">
+                isDelete = #{isDelete},
+            </if>
+        </set>
+        WHERE KeyId = #{keyId}
+    </update>
+
+    <select id="getUserInfoByKeyId" parameterType="java.lang.String" resultType="com.jixiata.model.Bo.User">
+        SELECT <include refid="BASE_COLUMN"/>
+        FROM tb_user
+        WHERE isDelete = 0
+        AND KeyId = #{keyId}
+    </select>
+
+    <select id="getUserInfoByCondition" resultType="com.jixiata.model.Bo.User">
+        SELECT <include refid="BASE_COLUMN"/>
+        FROM tb_user
+        WHERE isDelete = 0
+        <if test="condition.authId != null and condition.authId != ''">
+            AND AuthId = #{condition.authId}
+        </if>
+        <if test="condition.classId != null and condition.classId != ''">
+            AND ClassId = #{condition.classId}
+        </if>
+        <if test="condition.identity != null">
+            AND Identity = #{condition.identity}
+        </if>
+        <if test="pageIndex != null and pageSize != null">
+            LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
+        </if>
+    </select>
+</mapper>

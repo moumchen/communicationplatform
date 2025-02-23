@@ -1,0 +1,112 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.ExamMapper">
+    <sql id="BASE_COLUMN">
+      KeyId,ClassId,ExamName,StartTime,EndTime,Subject,AverageScore,MaxScore,Num,AddTime,ModifyTime,IsDelete
+    </sql>
+
+    <insert id="insertExam" parameterType="com.jixiata.model.Bo.Exam">
+        INSERT INTO tb_exam(<include refid="BASE_COLUMN"/>)
+        VALUES (#{keyId},#{classId},#{examName},#{startTime},#{endTime},#{subject},#{averageScore},#{maxScore},#{num},#{addTime},#{modifyTime},#{isDelete})
+    </insert>
+
+    <select id="getExamInfoByCondition" resultType="com.jixiata.model.Bo.Exam">
+        SELECT <include refid="BASE_COLUMN"/>
+        FROM tb_exam WHERE IsDelete = 0
+        <if test="condition.keyId != null">
+            AND KeyId = #{condition.keyId}
+        </if>
+        <if test="condition.classId != null">
+            AND classId = #{condition.classId}
+        </if>
+        <if test="condition.examName != null">
+            AND ExamName like concat('%',#{condition.examName},'%')
+        </if>
+        <if test="condition.startTime != null">
+            AND StartTime >= #{condition.startTime}
+        </if>
+        <if test="condition.endTime != null">
+            AND EndTime <![CDATA[ <= ]]> #{condition.endTime}
+        </if>
+        <if test="condition.subject != null">
+            AND Subject = #{condition.subject}
+        </if>
+        <if test="pageSize != null and pageIndex != null">
+            LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
+        </if>
+    </select>
+
+    <!--<select id="getExamInfoListByKeyIds" parameterType="java.util.List" resultType="com.jixiata.model.Bo.Exam">-->
+        <!--SELECT <include refid="BASE_COLUMN"/>-->
+        <!--FROM tb_exam-->
+        <!--WHERE isDelete = 0-->
+        <!--<if test="list != null and list.size > 0">-->
+            <!--AND KeyId in -->
+            <!--<foreach collection="list" item="item" separator="," open="(" close=")"></foreach>-->
+        <!--</if>-->
+    <!--</select>-->
+
+    <select id="getExamInfoCountByCondition" resultType="java.lang.Integer" parameterType="com.jixiata.model.Bo.Exam">
+        SELECT Count(1)
+        FROM tb_exam WHERE IsDelete = 0
+        <if test="keyId != null">
+            AND KeyId = #{keyId}
+        </if>
+        <if test="classId != null">
+            AND KeyId = #{classId}
+        </if>
+        <if test="examName != null">
+            AND ExamName like concat('%',#{examName},'%')
+        </if>
+        <if test="startTime != null">
+            AND StartTime >= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND EndTime <![CDATA[ <=  ]]>#{endTime}
+        </if>
+        <if test="subject != null">
+            AND Subject = #{subject}
+        </if>
+    </select>
+
+    <update id="updateExamByExamId" parameterType="com.jixiata.model.Bo.Exam">
+        UPDATE tb_exam
+        <set>
+            <if test="classId != null">
+                 KeyId = #{keyId},
+            </if>
+            <if test="examName != null">
+                 ExamName = #{examName},
+            </if>
+            <if test="startTime != null">
+                 StartTime = #{startTime},
+            </if>
+            <if test="endTime != null">
+                 EndTime = #{endTime},
+            </if>
+            <if test="subject != null">
+                 Subject = #{subject},
+            </if>
+            <if test="isDelete != null">
+                IsDelete = #{isDelete},
+            </if>
+            <if test="modifyTime != null">
+                ModifyTime = #{modifyTime},
+            </if>
+            <if test="averageScore != null">
+                AverageScore = #{averageScore},
+            </if>
+            <if test="maxScore != null">
+                MaxScore = #{maxScore},
+            </if>
+            <if test="num != null">
+                Num = #{num},
+            </if>
+        </set>
+        WHERE IsDelete = 0
+        AND KeyId = #{keyId}
+        LIMIT 1
+    </update>
+</mapper>

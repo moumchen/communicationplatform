@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html class="pixel-ratio-1">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>成绩区间分析 > 家校沟通平台</title>
+    <link rel="stylesheet" href="/resources/css/aui.css">
+    <link rel="stylesheet" href="/resources/lib/weui.min.css">
+    <link rel="stylesheet" href="/resources/css/jquery-weui.css">
+    <link rel="stylesheet" href="/resources/css/common.css">
+    <link rel="stylesheet" href="/resources/css/task/home.css">
+    <script src="/resources/lib/jquery-2.1.4.js"></script>
+    <script src="/resources/js/Echarts/echarts.min.js"></script>
+</head>
+<body>
+<header style="position:fixed;" class="aui-bar aui-bar-nav aui-bar-light">
+    <a class="aui-pull-left aui-btn" style="cursor:pointer" id="backButton">
+        <span class="aui-iconfont aui-icon-left"></span>
+    </a>
+    <div class="aui-title">成绩区间分析</div>
+</header>
+<section class="aui-content-padded content">
+    <div class="block" style="height: 50px;"></div>
+    <center><div id="showDiv" style="width: 80%;height:400px;"></div></center>
+    <p id="words"></p>
+</section>
+<!-- 展示图标的DIV -->
+
+
+
+
+
+<!-- Footer -->
+<div class="footer">
+  <center> <p >Copyright ©  陈颜乾 毕设作品</p> </center>
+    <center> <p >成都信息工程大学 软件工程学院</p></center>
+</div>
+</div>
+
+
+
+<footer class="aui-bar aui-bar-tab" style="bottom:-17px;" id="footer">
+    <div class="aui-bar-tab-item " style="cursor:pointer;" id="indexButton" tapmode>
+        <i class="aui-iconfont aui-icon-home"></i>
+        <div class="aui-bar-tab-label">首页</div>
+    </div>
+    <div class="aui-bar-tab-item " style="cursor:pointer;" id="taskButton" tapmode>
+        <i class="aui-iconfont aui-icon-pencil"></i>
+        <div class="aui-bar-tab-label">作业</div>
+    </div>
+    <div class="aui-bar-tab-item aui-active" style="cursor:pointer;" id="examButton" tapmode>
+        <!--<div class="aui-badge"></div>-->
+        <i class="aui-iconfont aui-icon-edit"></i>
+        <div class="aui-bar-tab-label">成绩</div>
+    </div>
+    <div class="aui-bar-tab-item" style="cursor:pointer;" id="applicationButton" tapmode>
+        <i class="aui-iconfont aui-icon-cert"></i>
+        <div class="aui-bar-tab-label">审批</div>
+    </div>
+    <div class="aui-bar-tab-item" style="cursor:pointer;"  id="chatButton" tapmode>
+        <i class="aui-iconfont aui-icon-comment"></i>
+        <div class="aui-bar-tab-label">聊天</div>
+    </div>
+    <div class="aui-bar-tab-item" style="cursor:pointer;"  id="mineButton" tapmode>
+        <i class="aui-iconfont aui-icon-my"></i>
+        <div class="aui-bar-tab-label">我的</div>
+    </div>
+</footer>
+<!-- JS引入-->
+
+<script src="/resources/js/jquery-weui.js"></script>
+<script src="/resources/js/common.js" ></script>
+<script src="/resources/js/exam/examAnalysis.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.TaskResultMapper">
+    <sql id="BASE_COLUMN">
+        keyId,
+        taskId,
+        userid,
+        classid,
+        isLock,
+        isdelete,
+        file,
+        count,
+        addTime,
+        modifytime,
+        score,
+        remark
+    </sql>
+
+    <insert id="insertTaskResult" parameterType="com.jixiata.model.Bo.TaskResult">
+        INSERT INTO tb_task_result (KeyId,taskId,userid,classid,isLock,isdelete,file,count,addTime,modifytime,score,remark)
+         VALUES(#{keyId},#{taskId},#{userId},#{classId},#{isLock},#{isDelete},#{file},#{count},#{addTime},#{modifyTime},#{score},#{remark})
+    </insert>
+
+    <select id="getTaskResultByCondition" resultType="com.jixiata.model.Bo.TaskResult">
+        SELECT <include refid="BASE_COLUMN"/>
+        FROM tb_task_result
+        WHERE isDelete = 0
+        <if test="condition.keyId != null and condition.keyId != ''">
+            AND KeyId = #{condition.keyId}
+        </if>
+        <if test="condition.classId != null">
+            AND classId = #{condition.classId}
+        </if>
+        <if test="condition.taskId != null">
+            And taskId = #{condition.taskId}
+        </if>
+        <if test="condition.userId != null">
+            And userId = #{condition.userId}
+        </if>
+        <if test="pageSize != null and pageIndex != null">
+            LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
+        </if>
+    </select>
+
+    <update id="updateTaskResultByKeyId" parameterType="com.jixiata.model.Bo.TaskResult">
+        UPDATE tb_task_result
+        <set>
+            <if test="classId != null">
+                classId = #{classId},
+            </if>
+            <if test="taskId != null">
+                taskId = #{taskId},
+            </if>
+            <if test="addTime != null and addTime != ''">
+                addTime = #{addTime},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                modifyTime = #{modifyTime},
+            </if>
+            <if test="isDelete != null">
+                isDelete = #{isDelete},
+            </if>
+            <if test="count != null">
+                count = #{count},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="userId != null">
+                userId = #{userId},
+            </if>
+            <if test="isLock != null">
+                isLock = #{isLock},
+            </if>
+            <if test="isDelete != null">
+                isDelete = #{isDelete},
+            </if>
+            <if test="score != null">
+                score = #{score},
+            </if>
+            <if test="file != null">
+                file = #{file},
+            </if>
+        </set>
+        WHERE  KeyId = #{keyId}
+    </update>
+
+    <select id="getCountByCondition" parameterType="com.jixiata.model.Bo.TaskResult" resultType="java.lang.Integer">
+        SELECT Count(1)
+        FROM tb_task_result
+        WHERE isDelete = 0
+        <if test="keyId != null">
+            AND KeyId = #{keyId}
+        </if>
+        <if test="classId != null">
+            AND ClassId = #{classId}
+        </if>
+        <if test="taskId != null">
+            AND taskId = #{taskId}
+        </if>
+    </select>
+</mapper>

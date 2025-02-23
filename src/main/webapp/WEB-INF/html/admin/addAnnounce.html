@@ -1,0 +1,61 @@
+﻿<html>
+<head>
+    <title>管理系统 - CUIT家校沟通平台</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/resources/css/layui/layui.css" />
+</head>
+<body>
+<ul class="layui-nav" lay-filter="">
+    <li class="layui-nav-item "><a href="/page/toUserAdmin">用户管理</a></li>
+    <li class="layui-nav-item layui-this"><a href="/page/toAnnouncementAdmin">公告管理</a></li>
+    <li class="layui-nav-item" style="float:right">CUIT家校沟通平台 - 系统管理 欢迎您:<span id="adminUserNameTip"></span></li>
+</ul>
+
+<center style="margin-top:50px">
+<div style="width:90%">
+    <form class="layui-form" action="">
+        <div class="layui-form-item typeChoice">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <select name="city" lay-verify="required">
+                    <option value="0">轮播（不需输入内容）</option>
+                    <option value="1">公告（不需选择图片）</option>
+                </select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text"  id="typeChoiceInput" value="" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit" style=""><dd onclick="changeTo(0);" lay-value="0" class="">轮播</dd><dd lay-value="1" onclick="changeTo(1);" id="gonggaoDD" class="">公告</dd></dl></div>
+            </div>
+        </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" id='title' lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item content">
+        <label class="layui-form-label ">内容</label>
+        <div class="layui-input-block">
+            <input type="text" name="content" id="content" lay-verify="title" autocomplete="off" placeholder="请输入内容" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item img">
+        <label class="layui-form-label ">图片</label>
+        <div class="layui-input-block">
+            <input type="file" id="file" name="img" lay-verify="title" autocomplete="off"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">优先级</label>
+        <div class="layui-input-block">
+            <input type="text" name="rank" id="rank" lay-verify="title" autocomplete="off" placeholder="请输入优先级" class="layui-input">
+        </div>
+    </div>
+    <button type="button" id="submitButton" class="layui-btn layui-btn-normal">提交</button>
+    </form>
+</div>
+</center>
+
+
+<script src="/resources/lib/jquery-2.1.4.js"></script>
+<script src="/resources/js/adminCommon.js"></script>
+<script src="/resources/js/layui/layui.all.js"></script>
+<script src="/resources/js/admin/addAnnounce.js"></script>
+</body>
+</html>

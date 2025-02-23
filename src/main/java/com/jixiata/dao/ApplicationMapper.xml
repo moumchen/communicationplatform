@@ -1,0 +1,113 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.ApplicationMapper">
+    <sql id="BASE_COLUMN">
+        keyId,
+        studentId,
+        teacherId,
+        title,
+        content,
+        addTime,
+        modifyTime,
+        isLock,
+        isDelete,
+        result,
+        remark,
+        resultTime
+    </sql>
+
+    <insert id="insertApplication" parameterType="com.jixiata.model.Bo.Application">
+        INSERT INTO tb_application (keyId, studentId,teacherId,title,content,addTime, modifyTime,isLock, isDelete,result,remark,resultTime)
+         VALUES(#{keyId},#{studentId},#{teacherId},#{title},#{content},#{addTime},#{modifyTime},#{isLock},#{isDelete},#{result},#{remark},#{resultTime})
+    </insert>
+
+    <select id="getApplicationByCondition" resultType="com.jixiata.model.Bo.Application">
+        SELECT <include refid="BASE_COLUMN"/>
+        FROM tb_application
+        WHERE isDelete = 0
+        <if test="condition.keyId != null">
+            AND KeyId = #{condition.keyId}
+        </if>
+        <if test="condition.studentId != null">
+            AND studentId = #{condition.studentId}
+        </if>
+        <if test="condition.teacherId != null">
+            AND teacherId = #{condition.teacherId}
+        </if>
+        <if test="condition.isLock != null">
+            And IsLock = #{condition.isLock}
+        </if>
+        <if test="condition.result != null">
+            And result = #{condition.result}
+        </if>
+         ORDER BY AddTime DESC
+        <if test="pageSize != null and pageIndex != null">
+            LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
+        </if>
+
+    </select>
+
+    <update id="updateApplicationByKeyId" parameterType="com.jixiata.model.Bo.Application">
+        UPDATE tb_application
+        <set>
+            <if test="studentId != null and studentId != ''">
+                studentId = #{studentId},
+            </if>
+            <if test="teacherId != null and teacherId != ''">
+                teacherId = #{teacherId},
+            </if>
+            <if test="addTime != null and addTime != ''">
+                addTime = #{addTime},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                modifyTime = #{modifyTime},
+            </if>
+            <if test="isLock != null">
+                isLock = #{isLock},
+            </if>
+            <if test="isDelete != null">
+                isDelete = #{isDelete},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="result != null">
+                result = #{result},
+            </if>
+            <if test="resultTime != null">
+                resultTime = #{resultTime},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        WHERE isDelete = 0
+        and KeyId = #{keyId}
+    </update>
+
+    <select id="getCountByCondition" parameterType="com.jixiata.model.Bo.Application" resultType="java.lang.Integer">
+        SELECT Count(1)
+        FROM tb_application
+        WHERE isDelete = 0
+        <if test="keyId != null and keyId != ''">
+            AND KeyId = #{keyId}
+        </if>
+        <if test="studentId != null and studentId != ''">
+            AND studentId = #{studentId}
+        </if>
+        <if test="isLock != null">
+            And IsLock = #{isLock}
+        </if>
+        <if test="teacherId != null">
+            And teacherId = #{teacherId}
+        </if>
+        <if test="result != null">
+            And result = #{result}
+        </if>
+    </select>
+</mapper>

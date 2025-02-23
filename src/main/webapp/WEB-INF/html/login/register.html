@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html class="pixel-ratio-1">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>注册 > 家校沟通平台</title>
+    <link rel="stylesheet" href="/resources/lib/weui.min.css">
+    <link rel="stylesheet" href="/resources/css/jquery-weui.css">
+    <link rel="stylesheet" href="/resources/css/login/register.css">
+</head>
+<body>
+
+<center><h1 class="title">注 册</h1></center>
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">账户</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="username" type="text" placeholder="请输入账号">
+        </div>
+    </div>
+    <div class="weui-cell weui-cell_vcode">
+        <div class="weui-cell__hd">
+            <label class="weui-label">密码</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input type="password"  id="password" class="weui-input" type="tel" placeholder="请输入密码">
+        </div>
+    </div>
+    <div class="weui-cell weui-cell_vcode">
+        <div class="weui-cell__hd password2_label">
+            <label class="weui-label">确认密码</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input type="password"  id="password2" class="weui-input" type="tel" placeholder="请再次输入密码">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">昵称</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="nickname" type="text" placeholder="请输入昵称">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="name" type="text" placeholder="请输入姓名">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">电话</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="phone" type="number" pattern="[0-9]*" placeholder="请输入电话">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">邮箱</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="email" type="email" placeholder="请输入邮箱">
+        </div>
+    </div>
+    <div class="weui-cells weui-cells_radio">
+        <label class="weui-cell weui-check__label" for="x11">
+            <div class="weui-cell__bd">
+                <p>家长用户</p>
+            </div>
+            <div class="weui-cell__ft parent_user">
+                <input type="radio" class="weui-check" name="radio1" id="x11"  checked="checked">
+                <span class="weui-icon-checked"></span>
+            </div>
+        </label>
+        <label class="weui-cell weui-check__label" for="x12">
+            <div class="weui-cell__bd">
+                <p>教师用户</p>
+            </div>
+            <div class="weui-cell__ft teacher_user">
+                <input type="radio" name="radio1" class="weui-check" id="x12">
+                <span class="weui-icon-checked"></span>
+            </div>
+        </label>
+    </div>
+    <div class="weui-cell weui-cell_vcode checkCodeDiv">
+        <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
+        <div class="weui-cell__bd">
+            <input id="checkCode" class="weui-input" type="text" placeholder="请输入验证码">
+        </div>
+        <div class="weui-cell__ft">
+            <img id="codeImg" class="weui-vcode-img" src="/api/getVerificationCode">
+        </div>
+    </div>
+    <a href="javascript:;" id="registerButton" class="weui-btn weui-btn_primary">注册</a>
+    <a href="javascript:;" id="backButton" class="weui-btn weui-btn_warn">返回登录界面</a>
+</div>
+
+
+<!-- JS引入-->
+<script src="/resources/lib/jquery-2.1.4.js"></script>
+<script type='text/javascript' src='/resources/js/swiper.js' charset='utf-8'></script>
+<script src="/resources/js/jquery-weui.js"></script>
+<script src="/resources/js/login/register.js"></script>
+</body>
+</html>

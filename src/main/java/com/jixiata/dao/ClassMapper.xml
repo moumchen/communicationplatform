@@ -1,0 +1,66 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.ClassMapper">
+    <sql id="BASE_COLUMN">
+      KeyId,ClassName,SchoolName,Kind,Students,AddTime,ModifyTime,IsDelete,InviteCode,Owner,Count
+    </sql>
+    <insert id="insertClass" parameterType="com.jixiata.model.Bo.Class" >
+        INSERT INTO tb_class (KeyId,ClassName,SchoolName,Kind,Students,AddTime,ModifyTime,IsDelete,InviteCode,Owner)
+        VALUES (#{keyId},#{className},#{schoolName},#{kind},#{students},#{addTime},#{modifyTime},#{isDelete},#{inviteCode},#{owner})
+    </insert>
+
+    <select id="getClassInfoByCondition" parameterType="com.jixiata.model.Bo.Class" resultType="com.jixiata.model.Bo.Class">
+        SELECT <include refid="BASE_COLUMN"/>
+        FROM tb_class
+        WHERE isDelete = 0
+        <if test="keyId != null and keyId != ''">
+            AND KeyId  = #{keyId}
+        </if>
+        <if test="className != null and className != ''">
+            AND ClassName = #{className}
+        </if>
+        <if test="kind != null">
+            AND Kind = #{kind}
+        </if>
+        <if test="inviteCode != null and inviteCode != ''">
+            AND InviteCode = #{inviteCode}
+        </if>
+        <if test="schoolName != null and schoolName != ''">
+            AND SchoolName = #{schoolName}
+        </if>
+    </select>
+
+    <update id="updateClassInfoByKeyId" parameterType="com.jixiata.model.Bo.Class">
+        UPDATE tb_class
+        <set>
+            <if test="kind != null">
+                kind = #{kind},
+            </if>
+            <if test="inviteCode != null">
+                inviteCode = #{inviteCode},
+            </if>
+            <if test="schoolName != null">
+                schoolName = #{schoolName},
+            </if>
+            <if test="className != null">
+                className = #{className},
+            </if>
+            <if test="modifyTime != null">
+                modifyTime = #{modifyTime},
+            </if>
+            <if test="students != null">
+                students = #{students},
+            </if>
+            <if test="owner != null">
+                owner = #{owner},
+            </if>
+            <if test="count != null">
+                count = #{count},
+            </if>
+        </set>
+        where isDelete = 0
+        and keyId = #{keyId}
+    </update>
+</mapper>

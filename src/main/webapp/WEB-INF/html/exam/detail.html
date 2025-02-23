@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html class="pixel-ratio-1">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>考试详情 > 家校沟通平台</title>
+    <link rel="stylesheet" href="/resources/lib/weui.min.css">
+    <link rel="stylesheet" href="/resources/css/jquery-weui.css">
+    <link rel="stylesheet" href="/resources/css/aui.css">
+    <link rel="stylesheet" href="/resources/css/common.css">
+    <!--<link rel="stylesheet" href="/resources/css/exam/detail.css">-->
+</head>
+<body>
+<header style="position:fixed;" class="aui-bar aui-bar-nav aui-bar-light">
+    <div class="aui-title">考试详情</div>
+</header>
+<div class="block" style="height: 50px;"></div>
+<div class="aui-tips aui-margin-b-15" style="position:fixed;bottom:50px;display: none;" count="0" id="tips-1">
+    <i class="aui-iconfont aui-icon-info"></i>
+    <div class="aui-tips-title" style="display: inline">您新增了考试成绩，请记得点击保存按钮进行保存操作！</div>
+    <i class="aui-iconfont aui-icon-close" tapmode="" onclick="closeTips()"></i>
+</div>
+<div class="aui-tips aui-margin-b-15" style="position:fixed;bottom:50px;display: none;" count="0" id="tips-2">
+    <i class="aui-iconfont aui-icon-info"></i>
+    <div class="aui-tips-title" style="display: inline">您的班级没有学生，无法添加成绩，快去邀请家长用户加入班级吧！</div>
+    <i class="aui-iconfont aui-icon-close" tapmode="" onclick="closeTips()"></i>
+</div>
+<ul class="aui-list aui-form-list">
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label">
+                考试名称
+            </div>
+            <div class="aui-list-item-input">
+                <input id="examName" type="text" placeholder="Name">
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label">
+                考试科目
+            </div>
+            <div class="aui-list-item-input">
+                <input id="subject" type="text">
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label">
+                平均分
+            </div>
+            <div class="aui-list-item-input">
+                <input id="averageScore" disabled type="text">
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label">
+                最高分
+            </div>
+            <div class="aui-list-item-input">
+                <input id="maxScore" disabled type="text">
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label">
+                已有分数人数
+            </div>
+            <div class="aui-list-item-input">
+                <input id="num" disabled type="text">
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label">
+                开始时间
+            </div>
+            <div class="aui-list-item-input">
+                <input id="startTime" type="text">
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-label">
+                结束时间
+            </div>
+            <div class="aui-list-item-input">
+                <input id="endTime" type="text">
+            </div>
+        </div>
+    </li>
+
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+            <div class="aui-btn aui-btn-info aui-margin-r-5" style="cursor:pointer" id="updateButton">更新考试信息</div>
+            <div class="aui-btn aui-btn-danger aui-margin-l-5" style="cursor:pointer" id="deleteButton">删除本考试</div>
+        </div>
+    </li>
+</ul>
+
+
+<div class="aui-content aui-margin-b-15" style="margin-top:10px">
+    <ul class="aui-list aui-list-in scoreUL">
+        <li class="aui-list-header">
+            考试成绩情况
+        </li>
+
+    </ul>
+</div>
+
+
+<center><div style="margin-top:15px" id="addItemButton" class="aui-btn aui-btn-info"><span class="aui-iconfont aui-icon-edit"></span>添加</div></center>
+
+
+    <footer class="aui-bar aui-bar-tab" id="footer">
+        <div class="aui-bar-tab-item " style="cursor:pointer;" id="indexButton" tapmode>
+            <i class="aui-iconfont aui-icon-home"></i>
+            <div class="aui-bar-tab-label">首页</div>
+        </div>
+        <div class="aui-bar-tab-item " style="cursor:pointer;" id="taskButton" tapmode>
+            <i class="aui-iconfont aui-icon-pencil"></i>
+            <div class="aui-bar-tab-label">作业</div>
+        </div>
+        <div class="aui-bar-tab-item aui-active" style="cursor:pointer;" id="examButton" tapmode>
+            <!--<div class="aui-badge"></div>-->
+            <i class="aui-iconfont aui-icon-edit"></i>
+            <div class="aui-bar-tab-label">成绩</div>
+        </div>
+        <div class="aui-bar-tab-item" style="cursor:pointer;" id="applicationButton" tapmode>
+            <i class="aui-iconfont aui-icon-cert"></i>
+            <div class="aui-bar-tab-label">审批</div>
+        </div>
+        <div class="aui-bar-tab-item" style="cursor:pointer;"  id="chatButton" tapmode>
+            <i class="aui-iconfont aui-icon-comment"></i>
+            <div class="aui-bar-tab-label">聊天</div>
+        </div>
+        <div class="aui-bar-tab-item" style="cursor:pointer;"  id="mineButton" tapmode>
+            <i class="aui-iconfont aui-icon-my"></i>
+            <div class="aui-bar-tab-label">我的</div>
+        </div>
+    </footer>
+
+    <!--<a href="javascript:;" id="submitButton" class="weui-btn weui-btn_primary">发布</a>-->
+    <!--<a href="javascript:;" id="backButton" class="weui-btn weui-btn_warn">返回</a>-->
+</div>
+<!-- Footer -->
+<div class="footer">
+    <div class="weui-footer">
+        <p class="weui-footer__text">Copyright ©  陈颜乾 毕设作品</p>
+        <p class="weui-footer__text">成都信息工程大学 软件工程学院</p>
+    </div>
+</div>
+</div>
+<!-- JS引入-->
+<script src="/resources/lib/jquery-2.1.4.js"></script>
+<script type='text/javascript' src='/resources/js/swiper.js' charset='utf-8'></script>
+<script type="text/javascript" src="/resources/js/pace.min.js"></script>
+<script src="/resources/js/jquery-weui.js"></script>
+<script src="/resources/js/aui-dialog.js"></script>
+<script src="/resources/js/common.js" ></script>
+<script src="/resources/js/exam/detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿<html>
+<head>
+    <title>管理系统 - CUIT家校沟通平台</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/resources/css/layui/layui.css" />
+</head>
+<body>
+<ul class="layui-nav" lay-filter="">
+    <li class="layui-nav-item layui-this">用户管理</li>
+    <li class="layui-nav-item"><a href="/page/toAnnouncementAdmin">公告管理</a></li>
+    <li class="layui-nav-item" style="float:right">CUIT家校沟通平台 - 系统管理 欢迎您:<span id="adminUserNameTip"> </span><a style='float:right;cursor:pointer' id="logout">退出登录</a> </li>
+</ul>
+<center>
+<div style="width:90%">
+<table class="layui-table">
+    <colgroup>
+        <col width="150">
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+    <tr>
+        <th width="10%">用户名</th>
+        <th width="5%">密码</th>
+        <th width="10%">身份</th>
+        <th width="15%">姓名</th>
+        <th width="15%">昵称</th>
+        <th width="15%">邮件</th>
+        <th width="10%">手机</th>
+        <th width="10%">是否锁定</th>
+        <th width="10%">操作</th>
+    </tr>
+    </thead>
+    <tbody id="trContent">
+
+    </tbody>
+</table>
+    <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-10"><span class="layui-laypage-count"></span><a href="javascript:;" id="toPrePageTag" class="layui-laypage-prev" onclick="toPrePage();">上一页</a><a href="javascript:;" id="toNextPageTag" onclick="toNextPage();" class="layui-laypage-next" >下一页</a><span class="layui-laypage-limits"><select id="selectPageSize" lay-ignore=""><option value="10" selected="">10 条/页</option><option value="20">20 条/页</option><option value="30">30 条/页</option><option value="40">40 条/页</option><option value="50">50 条/页</option></select></span><i class="layui-icon layui-icon-refresh"></i></a><span class="layui-laypage-skip">到第<input type="text" id="skipPageInput" min="1" value="1" class="layui-input">页<button type="button" id="skipPageButton" class="layui-laypage-btn">确定</button></span></div>
+</div>
+</center>
+<script src="/resources/lib/jquery-2.1.4.js"></script>
+<script src="/resources/js/jquery-weui.js"></script>
+<script src="/resources/js/adminCommon.js"></script>
+<script src="/resources/js/admin/userAdmin.js"></script>
+</body>
+</html>

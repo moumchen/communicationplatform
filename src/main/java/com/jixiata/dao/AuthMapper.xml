@@ -1,0 +1,85 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.AuthMapper">
+    <sql id="BASE_COLUMN">
+        KeyId,Username,Password,AddTime,ModifyTime,IsLock,IsDelete,Source,Salt
+    </sql>
+
+    <insert id="insertAuth" parameterType="com.jixiata.model.Bo.Auth">
+        INSERT INTO tb_auth (KeyID, Username, Password, AddTime, ModifyTime,isLock,isdelete,source,salt)
+         VALUES(#{keyId},#{username},#{password},#{addTime},#{modifyTime},#{isLock},#{isDelete},#{source},#{salt})
+    </insert>
+
+    <select id="getAuthByCondition" resultType="com.jixiata.model.Bo.Auth">
+        SELECT <include refid="BASE_COLUMN"/>
+        FROM tb_Auth
+        WHERE isDelete = 0
+        <if test="condition.keyId != null and condition.keyId != ''">
+            AND KeyId = #{condition.keyId}
+        </if>
+        <if test="condition.username != null and condition.username != ''">
+            AND Username = #{condition.username}
+        </if>
+        <if test="condition.isLock != null">
+            And IsLock = #{condition.isLock}
+        </if>
+        <if test="condition.source != null">
+            And Source = #{condition.source}
+        </if>
+        <if test="pageSize != null and pageIndex != null">
+            LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
+        </if>
+    </select>
+
+    <update id="updateAuthByAuthId" parameterType="com.jixiata.model.Bo.Auth">
+        UPDATE tb_auth
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="addTime != null and addTime != ''">
+                addTime = #{addTime},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                modifyTime = #{modifyTime},
+            </if>
+            <if test="isLock != null">
+                isLock = #{isLock},
+            </if>
+            <if test="isDelete != null">
+                isDelete = #{isDelete},
+            </if>
+            <if test="source != null">
+                source = #{source},
+            </if>
+            <if test="salt != null and salt != ''">
+                salt = #{salt},
+            </if>
+        </set>
+        WHERE isDelete = 0
+        and KeyId = #{keyId}
+    </update>
+
+    <select id="getCountByCondition" parameterType="com.jixiata.model.Bo.Auth" resultType="java.lang.Integer">
+        SELECT Count(1)
+        FROM tb_auth
+        WHERE isDelete = 0
+        <if test="keyId != null and keyId != ''">
+            AND KeyId = #{keyId}
+        </if>
+        <if test="username != null and username != ''">
+            AND Username = #{username}
+        </if>
+        <if test="isLock != null">
+            And IsLock = #{isLock}
+        </if>
+        <if test="source != null">
+            And Source = #{source}
+        </if>
+    </select>
+</mapper>

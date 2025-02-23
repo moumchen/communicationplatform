@@ -1,0 +1,81 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.ChatGroupMapper">
+    <sql id="BASE_COLUMN">
+       KeyId,Creater,Users,GroupName,Count,IsDelete,AddTime,ModifyTime
+    </sql>
+
+    <insert id="insertChatGroup" parameterType="com.jixiata.model.Bo.ChatGroup">
+        INSERT INTO tb_chat_group (KeyId,Creater,Users,GroupName,Count,IsDelete,AddTime,ModifyTime)
+         VALUES(#{keyId},#{creater},#{users},#{groupName},#{count},#{isDelete},#{addTime},#{modifyTime})
+    </insert>
+
+    <select id="getChatGroupByCondition" resultType="com.jixiata.model.Bo.ChatGroup">
+        SELECT <include refid="BASE_COLUMN"/>
+        FROM tb_chat_group
+        WHERE isDelete = 0
+        <if test="condition.keyId != null">
+            AND KeyId = #{condition.keyId}
+        </if>
+        <if test="condition.users != null">
+            AND Users like "%"#{condition.users}"%"
+        </if>
+        <if test="condition.creater != null">
+            AND Creater = #{condition.creater}
+        </if>
+        <if test="condition.groupName != null">
+            AND groupName = #{condition.groupName}
+        </if>
+         ORDER BY AddTime DESC
+        <if test="pageSize != null and pageIndex != null">
+            LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
+        </if>
+
+    </select>
+
+    <update id="updateChatGroupByKeyId" parameterType="com.jixiata.model.Bo.ChatGroup">
+        UPDATE tb_chat_group
+        <set>
+            <if test="users != null and users != ''">
+                users = #{users},
+            </if>
+            <if test="groupName != null and groupName != ''">
+                groupName = #{groupName},
+            </if>
+            <if test="addTime != null and addTime != ''">
+                addTime = #{addTime},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                modifyTime = #{modifyTime},
+            </if>
+            <if test="isDelete != null">
+                isDelete = #{isDelete},
+            </if>
+            <if test="creater != null">
+                creater = #{creater},
+            </if>
+        </set>
+        WHERE isDelete = 0
+        and KeyId = #{keyId}
+    </update>
+
+    <select id="getCountByCondition" parameterType="com.jixiata.model.Bo.ChatGroup" resultType="java.lang.Integer">
+        SELECT Count(1)
+        FROM tb_chat_group
+        WHERE isDelete = 0
+        <if test="keyId != null and keyId != ''">
+            AND KeyId = #{keyId}
+        </if>
+        <if test="creater != null and creater != ''">
+            AND creater = #{creater}
+        </if>
+        <if test="users != null">
+            And users like "%"#{users}"%"
+        </if>
+        <if test="groupName != null">
+            And groupName like "%"#{groupName}"%"
+        </if>
+    </select>
+</mapper>

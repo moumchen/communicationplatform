@@ -1,0 +1,89 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jixiata.dao.ScoreMapper">
+    <sql id="BASE_COLUMN">
+        keyid,
+        examid,
+        userid,
+        score,
+        rank,
+        addtime,
+        modifytime,
+        isdelete
+    </sql>
+
+    <select id="queryScoresByCondition"  resultType="com.jixiata.model.Bo.Score">
+        SELECT <include refid="BASE_COLUMN" />
+        FROM tb_score
+        WHERE isDelete = 0
+        <if test="condition.keyId != null and condition.keyId != ''">
+            AND KeyId = #{condition.keyId}
+        </if>
+        <if test="condition.examId != null and condition.examId != ''">
+            AND ExamId = #{condition.examId}
+        </if>
+        <if test="condition.userId != null and condition.userId != ''">
+            AND UserId = #{condition.userId}
+        </if>
+        <if test="pageIndex != null and pageSize != null">
+            LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
+        </if>
+    </select>
+
+    <insert id="insertScore" parameterType="com.jixiata.model.Bo.Score">
+        INSERT tb_score(<include refid="BASE_COLUMN"/>)
+        VALUES(#{keyId},
+        #{examId},
+        #{userId},
+        #{score},
+        #{rank},
+        #{addTime},
+        #{modifyTime},
+        #{isDelete})
+    </insert>
+
+    <update id="updateScore" parameterType="com.jixiata.model.Bo.Score">
+        UPDATE tb_score
+        <set>
+            <if test="score != null">
+                Score = #{score},
+            </if>
+            <if test="modifyTime != null">
+                ModifyTime = #{modifyTime},
+            </if>
+            <if test="rank != null">
+                Rank = #{rank},
+            </if>
+            <if test="isDelete != null">
+                isDelete = #{isDelete},
+            </if>
+            <if test="examId != null">
+                examId = #{examId},
+            </if>
+            <if test="userId != null">
+                userId = #{userId},
+            </if>
+        </set>
+        WHERE isDelete = 0
+        <if test="keyId != null">
+            AND KeyId = #{keyId}
+        </if>
+        <if test="examId != null and userId != null">
+            And examId = #{examId} AND userId = #{userId}
+        </if>
+    </update>
+
+    <select id="getScoreListByExamIds" parameterType="java.util.List" resultType="com.jixiata.model.Bo.Score">-->
+        SELECT <include refid="BASE_COLUMN"/>
+        FROM tb_score
+        WHERE isDelete = 0
+        <if test="list != null and list.size > 0">
+        AND ExamId in
+            <foreach collection="list" item="item" separator="," open="(" close=")">
+                item
+            </foreach>
+        </if>
+    </select>
+</mapper>

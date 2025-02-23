@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 控制一个pool可以分配多少个Jedis实例 -->
+        <property name="maxTotal" value="${redis.pool.maxActive}"/>
+        <!-- 连接池中最多可空闲maxIdle个连接，其取值表示没有数据库连接时依然可以保持该数量的空闲连接数-->
+        <property name="maxIdle" value="${redis.pool.maxIdle}"/>
+        <!-- 最大等待时间:当没有可用连接时，连接池等待连接被归还的最大时间(以毫秒计)，超过时间则抛出异常-->
+        <property name="maxWaitMillis" value="${redis.pool.maxWait}" />
+        <!-- 在获取连接的时候检查有效性 -->
+        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>
+    </bean>
+
+    <bean id="jedisPoolWriper" class="com.jixiata.util.JedisPoolWriper" depends-on="jedisPoolConfig">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="${redis.host}"/>
+        <constructor-arg index="2" value="${redis.port}" type="int"/>
+    </bean>
+
+</beans>
