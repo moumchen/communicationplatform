@@ -4,7 +4,7 @@
 
 <mapper namespace="com.jixiata.dao.IndexInfoMapper">
     <sql id="BASE_COLUMN">
-      KeyId,Kind,Title,Content,Img,IsDelete,AddTime,ModifyTime,Rank
+      KeyId,Kind,Title,Content,Img,IsDelete,AddTime,ModifyTime,`Rank`
     </sql>
 
     <insert id="insertIndexInfo" parameterType="com.jixiata.model.Bo.IndexInfo">
@@ -25,7 +25,7 @@
         AND title = #{condition.title}
     </if>
 
-     Order By Rank DESC
+     Order By `Rank` DESC
         <if test="pageIndex != null and pageSize != null">
             LIMIT ${pageSize*(pageIndex-1)},#{pageSize}
         </if>
@@ -59,7 +59,7 @@
                 img = #{img},
             </if>
             <if test="rank != null">
-                rank = #{rank},
+                `rank` = #{rank},
             </if>
         </set>
         WHERE KeyId = #{keyId}

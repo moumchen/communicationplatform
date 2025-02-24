@@ -12,7 +12,6 @@ import com.jixiata.util.CommonUtils;
 import com.jixiata.util.ConstantEnum;
 import com.jixiata.util.JedisPoolWriper;
 import com.jixiata.util.UserUtils;
-import org.omg.CORBA.COMM_FAILURE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
