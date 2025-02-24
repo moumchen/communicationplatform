@@ -37,9 +37,8 @@ A Java project written during undergraduate period (**2019**), simple home-schoo
 ```
 
 # Preview
-![img.png](readme/img.png)
-![img_1.png](readme/img_1.png)
-![img_2.png](readme/img_2.png)
-![img_3.png](readme/img_3.png)
-![img_4.png](readme/img_4.png)
->>>>>>> 5e81ad7 (fix: adjust the version of mysql)
+![admin_login.png](readme/admin_login.png)
+![user_admin.png](readme/user_admin.png)
+![announcement_admin.png](readme/announcement_admin.png)
+![class_create.png](readme/class_create.png)
+![user.png](readme/user.png)
